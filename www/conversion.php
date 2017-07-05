@@ -12,6 +12,7 @@ foreach ($users as $user) {
     $login = $user[0];
     $mdp = $user[1];
     $encrypt = hashPassword($mdp);
+    //la requête SQL nous permet de mettre à jour les mot de passe dans la base de données et ainsi d’avoir tout nos mots de passe hachés directement implémentés dans la base de donnée -> augmentation de la sécurité
     $sql = "UPDATE users SET mdp = \"$encrypt\" WHERE login = \"$login\"";
     $lien->query($sql);
     //En rouge l’ancien mot de passe des utilisateurs et en vert le nouveau mot de passe hashé
