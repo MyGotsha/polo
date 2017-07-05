@@ -13,7 +13,8 @@ $_SESSION['retourRech'] = $_SERVER['REQUEST_URI'];
 
 //Authentification
 if(isset($_POST['valider'])) {
-	$sql = "SELECT login,nom,prenom,admin FROM users WHERE login='".$_POST['login']."' AND mdp='".$_POST['mdp']."' AND actif='O'";
+
+	$sql = "SELECT login,nom,prenom,admin FROM users WHERE login='".$_POST['login']."' AND mdp='".hashPassword($_POST['mdp'])."' AND actif='O'";
 	$req = mysqli_query($lien,$sql);
 
 	if(mysqli_num_rows($req) == 1) {

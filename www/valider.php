@@ -32,16 +32,20 @@ if(isset($type)) {
 						$sql = "SELECT * FROM users WHERE LOGIN='".$_POST['login']."'";
 						$req = mysqli_query($lien,$sql);
 						if(mysqli_num_rows($req) == 0) {
-						  $sql = "INSERT INTO users SET login='".$_POST['login']."', mdp='".$_POST['mdp']."', nom='".$_POST['nom']."', prenom='".$_POST['prenom']."', email='".$_POST['email']."'";
-							if($req = mysqli_query($lien,$sql)) {
-								//On génère le mail
-								$tab['to'] = $_POST['email'];
-								$tab['login'] = $_POST['login'];
-     							genereMail('activation',$tab);
-								message('Inscription r&eacute;ussie.',false,'Page d\'accueil|index.php');
-							} else {
-								message('Il s\'est produit une erreur dans l\'inscription.',true,'Retour|inscription.php');
-							}
+
+                            // Je hash le mot de passe afin de ne pas le sauvegarder en clair
+						    $_POST['mdp'] = hashPassword($_POST['mdp']);
+
+                            $sql = "INSERT INTO users SET login='".$_POST['login']."', mdp='".$_POST['mdp']."', nom='".$_POST['nom']."', prenom='".$_POST['prenom']."', email='".$_POST['email']."'";
+                            if($req = mysqli_query($lien,$sql)) {
+                                //On génère le mail
+                                $tab['to'] = $_POST['email'];
+                                $tab['login'] = $_POST['login'];
+                                genereMail('activation',$tab);
+                                message('Inscription r&eacute;ussie.',false,'Page d\'accueil|index.php');
+                            } else {
+                                message('Il s\'est produit une erreur dans l\'inscription.',true,'Retour|inscription.php');
+                            }
 						} else {
 							message('Login existant!!!',true,'Retour|inscription.php');
 						}

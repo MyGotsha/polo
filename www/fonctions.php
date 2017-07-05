@@ -13,6 +13,11 @@ function formatDate($str) {
 	return $str;
 }
 
+//fonction hash password ajoutée pour hasher en sha256
+function hashPassword($clearPassword) {
+	return hash('sha256', $clearPassword);
+}
+
 function formatText($str) {
 	if($mq == false) {
 		$str = addslashes(nl2br($str));
