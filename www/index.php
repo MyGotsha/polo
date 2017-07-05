@@ -13,7 +13,7 @@ $_SESSION['retourRech'] = $_SERVER['REQUEST_URI'];
 
 //Authentification
 if(isset($_POST['valider'])) {
-
+	//modification de la variable pour aller chercher le mot de passe hashé avec la fonction "hashPassword" en sha256 dans fonctions.php
 	$sql = "SELECT login,nom,prenom,admin FROM users WHERE login='".$_POST['login']."' AND mdp='".hashPassword($_POST['mdp'])."' AND actif='O'";
 	$req = mysqli_query($lien,$sql);
 
